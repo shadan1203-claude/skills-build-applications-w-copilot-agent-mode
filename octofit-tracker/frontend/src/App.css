@@ -1,0 +1,42 @@
+.navbar-brand {
+  color: #172554;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.brand-logo {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+}
+
+.nav-link {
+  color: #64748b;
+  border-radius: 0.5rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.hero-panel {
+  background: linear-gradient(135deg, #eff6ff, #f8fafc);
+  border: 1px solid #dbeafe;
+  border-radius: 1.25rem;
+}
+
+.app-logo {
+  height: 84px;
+  width: 84px;
+  object-fit: contain;
+}
+
+.eyebrow {
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
