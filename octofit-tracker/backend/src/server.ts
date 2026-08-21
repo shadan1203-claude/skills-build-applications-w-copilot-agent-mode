@@ -7,6 +7,11 @@ import { createResourceRouter } from './routes/resource.js';
 
 const port = 8000;
 const codespaceName = process.env.CODESPACE_NAME;
+const frontendOrigin =
+  process.env.FRONTEND_ORIGIN ||
+  (codespaceName
+    ? `https://${codespaceName}-5173.app.github.dev`
+    : 'https://fictional-space-guacamole-97ppp6qq4rq5hxr74-5173.app.github.dev');
 export const apiBaseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
   : 'http://localhost:8000';
@@ -16,11 +21,14 @@ export function createApp(): Express {
 
   app.disable('x-powered-by');
   app.use(express.json());
-  app.use((_request, response, next) => {
-    response.header('Access-Control-Allow-Origin', '*');
-    response.header('Access-Control-Allow-Headers', 'Content-Type');
-    response.header('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS');
-    if (_request.method === 'OPTIONS') {
+  app.use((request, response, next) => {
+    if (request.headers.origin === frontendOrigin) {
+      response.header('Access-Control-Allow-Origin', frontendOrigin);
+      response.header('Vary', 'Origin');
+      response.header('Access-Control-Allow-Methods', 'GET');
+      response.header('Access-Control-Allow-Headers', 'Content-Type');
+    }
+    if (request.method === 'OPTIONS') {
       response.sendStatus(204);
       return;
     }

@@ -1,11 +1,14 @@
 const codespaceName = import.meta.env.VITE_CODESPACE_NAME
 
-export const apiBaseUrl = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev`
-  : 'http://localhost:8000'
+// Vite proxies /api requests during development, avoiding Codespaces gateway auth.
+export const apiBaseUrl = import.meta.env.DEV
+  ? ''
+  : codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : 'http://localhost:8000'
 
-export async function fetchCollection(component) {
-  const response = await fetch(`${apiBaseUrl}/api/${component}/`)
+export async function fetchCollection(component, endpoint = `${apiBaseUrl}/api/${component}/`) {
+  const response = await fetch(endpoint)
   if (!response.ok) {
     throw new Error(`Unable to load ${component}`)
   }

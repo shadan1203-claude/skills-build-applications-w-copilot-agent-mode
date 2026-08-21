@@ -7,17 +7,17 @@ function displayValue(value) {
   return String(value)
 }
 
-export default function CollectionPage({ component, title, description, columns }) {
+export default function CollectionPage({ component, endpoint, title, description, columns }) {
   const [items, setItems] = useState([])
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetchCollection(component)
+    fetchCollection(component, endpoint)
       .then(setItems)
       .catch((requestError) => setError(requestError.message))
       .finally(() => setLoading(false))
-  }, [component])
+  }, [component, endpoint])
 
   return (
     <section className="container py-4">
